@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: barclays-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: barclays123
+      MONGO_INITDB_DATABASE: corporate_banking
+    volumes:
+      - ./mongodb-setup/init-scripts:/docker-entrypoint-initdb.d
+      - mongodb_data:/data/db
+    networks:
+      - barclays-network
+
+  rest-api:
+    build: ./rest-service
+    container_name: barclays-rest-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://admin:barclays123@mongodb:27017/corporate_banking?authSource=admin
+    networks:
+      - barclays-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  barclays-network:
+    driver: bridge

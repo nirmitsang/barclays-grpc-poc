@@ -1,0 +1,9 @@
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:barclays123@localhost:27017/corporate_banking?authSource=admin
+
+grpc:
+  server:
+    port: 9090
