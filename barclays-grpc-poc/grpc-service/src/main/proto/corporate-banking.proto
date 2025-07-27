@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package com.barclays.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.barclays.grpc.generated";
+
+service CorporateBankingService {
+  rpc GetMultipleCustomers(MultiCustomerRequest) returns (MultiCustomerResponse);
+  rpc SearchTransactions(TransactionSearchRequest) returns (TransactionSearchResponse);
+}
+
+message MultiCustomerRequest {
+  repeated string customer_ids = 1;
+  map<string, string> metadata_filters = 2;
+}
+
+message MultiCustomerResponse {
+  repeated Customer customers = 1;
+  int32 total_count = 2;
+  int64 query_time_ms = 3;
+}
+
+message Customer {
+  string id = 1;
+  string customer_id = 2;
+  string name = 3;
+  string segment = 4;
+  map<string, string> metadata = 5;
+}
+
+message TransactionSearchRequest {
+  repeated string account_numbers = 1;
+  map<string, string> metadata_filters = 2;
+}
+
+message TransactionSearchResponse {
+  repeated Transaction transactions = 1;
+  int32 total_count = 2;
+  int64 query_time_ms = 3;
+}
+
+message Transaction {
+  string id = 1;
+  string transaction_id = 2;
+  string account_number = 3;
+  double amount = 4;
+  string transaction_type = 5;
+  string timestamp = 6;
+  map<string, string> metadata = 7;
+}
