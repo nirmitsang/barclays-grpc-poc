@@ -1,0 +1,3 @@
+com/barclays/monitoring/MonitoringApplication.class
+com/barclays/monitoring/MetricsWebSocketHandler.class
+com/barclays/monitoring/WebSocketConfig.class
